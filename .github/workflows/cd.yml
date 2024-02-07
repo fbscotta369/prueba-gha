@@ -34,16 +34,22 @@ jobs:
     steps:
     -
       name: deploy to cluster
-      uses: steebchen/kubectl@v2.0.0
+#      uses: steebchen/kubectl@v2.0.0
+      uses: steebchen/kubectl@master
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: -n prueba set image --record deployment/prueba-gha prueba-gha=fbscotta369/prueba-gha:${{ github.sha }}
+#        command: -n prueba set image --record deployment/prueba-gha prueba-gha=fbscotta369/prueba-gha:${{ github.sha }}
+        args: -n prueba set image --record deployment/prueba-gha prueba-gha=fbscotta369/prueba-gha:${{ github.sha }}
     -
       name: verify deployment
-      uses: steebchen/kubectl@v2.0.0
+#      uses: steebchen/kubectl@v2.0.0
+      uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         KUBECTL_VERSION: "1.28"
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: -n prueba rollout status deployment/prueba-gha
+ #       command: -n prueba rollout status deployment/prueba-gha
+        args: '"rollout status deployment/my-app"'
+
+
